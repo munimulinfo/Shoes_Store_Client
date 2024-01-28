@@ -3,10 +3,17 @@ import { baseApi } from "../../api/baseApi";
 const shoesApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getShoesWithEmail: builder.query({
-      query: (email) => {
+      query: (filter) => {
+        const params = new URLSearchParams();
+        Object.entries(filter).forEach(([key, value]) => {
+          if (value !== undefined && value !== null) {
+            params.append(key, String(value));
+          }
+        });
         return {
-          url: `/shoes/get-shoes/${email}`,
+          url: `/shoes/get-shoes`,
           method: "GET",
+          params: params,
         };
       },
       providesTags: ["shoes"],

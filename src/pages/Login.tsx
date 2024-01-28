@@ -33,6 +33,7 @@ const Login = () => {
       const result = await userLogin(loginInfo).unwrap();
       const { accessToken } = result.data;
       const user = decodedToken(accessToken);
+
       console.log(user);
       dispatch(
         loginUser({

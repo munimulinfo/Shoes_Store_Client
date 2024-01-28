@@ -2,16 +2,17 @@ import {
   useDeleteShoeMutation,
   useGetShoesWithEmailQuery,
 } from "../../redux/featuers/shoes/shoesApi";
-import { useAppSelector } from "../../redux/hooks";
+import { useState } from "react";
 import AddShoes from "./AddShoes";
 import { FaTrash } from "react-icons/fa";
 import { toast } from "sonner";
 import UpdateShoes from "./UpdateShoes";
 import ShoesDetails from "./ShoesDetails";
 import Swal from "sweetalert2";
+import SearchModal from "./SearchModal";
 const AllShoes = () => {
-  const user = useAppSelector((state) => state.auth.user);
-  const { data: shoes, isLoading } = useGetShoesWithEmailQuery(user?.email);
+  const [filter, setFilter] = useState({});
+  const { data: shoes, isLoading } = useGetShoesWithEmailQuery(filter);
   const [deleteShoe] = useDeleteShoeMutation();
   if (isLoading) {
     return <p>loding....</p>;
@@ -44,9 +45,7 @@ const AllShoes = () => {
         </h1>
         <div className="flex gap-4">
           <AddShoes></AddShoes>
-          <button className="btn px-8 text-[15px] font-serif button-gradient text-white rounded-full uppercase">
-            Filter Shoes
-          </button>
+          <SearchModal setFilter={setFilter}></SearchModal>
         </div>
       </div>
 
