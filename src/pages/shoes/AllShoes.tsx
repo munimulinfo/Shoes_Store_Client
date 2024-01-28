@@ -41,7 +41,7 @@ const AllShoes = () => {
     <div>
       <div className="flex justify-between mt-10 lg:mx-10 py-4 rounded-lg lg:px-8 gradient-color items-center">
         <h1 className="uppercase text-2xl font-serif font-semibold text-white">
-          Shoes-Store
+          Manage-Shoes
         </h1>
         <div className="flex gap-4">
           <AddShoes></AddShoes>

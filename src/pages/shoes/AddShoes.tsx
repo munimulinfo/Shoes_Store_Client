@@ -1,5 +1,5 @@
 import { useAddShoesMutation } from "../../redux/featuers/shoes/shoesApi";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useState } from "react";
 import { FaPersonSkating } from "react-icons/fa6";
@@ -28,7 +28,7 @@ const AddShoes = () => {
     formState: { errors },
   } = useForm();
 
-  const handleFormData = async (data: any) => {
+  const handleFormData = async (data: FieldValues) => {
     try {
       setLoading(true);
       const imgdata = new FormData();

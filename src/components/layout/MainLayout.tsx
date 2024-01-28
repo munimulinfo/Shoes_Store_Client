@@ -35,7 +35,7 @@ const MainLayout = () => {
             <Link to={"/"}>Manage Shoes</Link>
           </li>
           <li className="button-gradient py-2 uppercase px-4 text-white rounded-lg">
-            <Link to={"/oredrs"}>Manage Orders</Link>
+            <Link to={"/sels"}>Manage Sels</Link>
           </li>
           <li
             onClick={handleLogout}

@@ -3,8 +3,8 @@ import App from "../App";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 import AllShoes from "../pages/shoes/AllShoes";
-import AllOrders from "../pages/oredrs/AllOrders";
 import ProtectRoute from "./ProtectRoute";
+import Allsels from "../pages/allsels/Allsels";
 
 const router = createBrowserRouter([
   {
@@ -24,10 +24,10 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "oredrs",
+        path: "sels",
         element: (
           <ProtectRoute>
-            <AllOrders></AllOrders>
+            <Allsels></Allsels>
           </ProtectRoute>
         ),
       },
