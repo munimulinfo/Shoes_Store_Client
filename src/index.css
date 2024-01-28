@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.label-color {
+  @apply label-text font-bold font-serif text-emerald-500;
+}
+
+.p-text {
+  @apply text-lg font-sans text-purple-600 font-semibold;
+}
+.gradient-color {
+  background-color: #e9e100;
+  background-image: linear-gradient(160deg, #373831 0%, #020701 100%);
+}
+
+.button-gradient {
+  background-image: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    rgba(237, 3, 32, 0.87) 20.8%,
+    rgba(242, 121, 1, 0.84) 74.4%
+  );
+}
+
+.side-gradient {
+  background-color: #e9e100;
+  background-image: linear-gradient(160deg, #373831 0%, #020701 100%);
+}

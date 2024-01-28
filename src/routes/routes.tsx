@@ -2,7 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
-import ProtectRoute from "./protectRoute";
+import AllShoes from "../pages/shoes/AllShoes";
+import AllOrders from "../pages/oredrs/AllOrders";
+import ProtectRoute from "./ProtectRoute";
 
 const router = createBrowserRouter([
   {
@@ -12,6 +14,24 @@ const router = createBrowserRouter([
         <App></App>
       </ProtectRoute>
     ),
+    children: [
+      {
+        path: "/",
+        element: (
+          <ProtectRoute>
+            <AllShoes></AllShoes>
+          </ProtectRoute>
+        ),
+      },
+      {
+        path: "oredrs",
+        element: (
+          <ProtectRoute>
+            <AllOrders></AllOrders>
+          </ProtectRoute>
+        ),
+      },
+    ],
   },
   {
     path: "/register",
