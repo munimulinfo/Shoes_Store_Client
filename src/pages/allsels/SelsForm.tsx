@@ -13,7 +13,7 @@ const SelsForm = ({ quantity, _id }: TSelsFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [loding, setLoading] = useState(false);
   const [addSell, { isLoading }] = useAddSellMutation();
-  const user = useAppSelector((state) => state.auth.user);
+  const user = useAppSelector((state) => state.auth?.user);
   //modal open function
   const openModal = () => {
     setIsOpen(true);

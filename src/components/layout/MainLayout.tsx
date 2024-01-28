@@ -30,12 +30,18 @@ const MainLayout = () => {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className=" pt-20 px-4 flex flex-col w-56 shodow shadow-lg gap-2 side-gradient h-screen">
+        <ul className=" px-4 flex flex-col w-56 shodow shadow-lg gap-2 side-gradient h-screen">
+          <h1 className="text-white text-center font-bold text-2xl pt-6 pb-10">
+            SHOES-STORE
+          </h1>
           <li className="button-gradient py-2 uppercase px-4 text-white rounded-lg hover:button-gradient">
             <Link to={"/"}>Manage Shoes</Link>
           </li>
           <li className="button-gradient py-2 uppercase px-4 text-white rounded-lg">
             <Link to={"/sels"}>Manage Sels</Link>
+          </li>
+          <li className="button-gradient py-2 uppercase px-4 text-white rounded-lg">
+            <Link to={"/sels-history"}>Sells History</Link>
           </li>
           <li
             onClick={handleLogout}

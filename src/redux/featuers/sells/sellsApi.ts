@@ -2,6 +2,17 @@ import { baseApi } from "../../api/baseApi";
 
 const sellsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getAllSell: builder.query({
+      query: (params) => {
+        console.log(params, "inside base api");
+        return {
+          url: "/sells/allsells",
+          method: "GET",
+          params: params,
+        };
+      },
+      providesTags: ["sells"],
+    }),
     addSell: builder.mutation({
       query: (product) => {
         return {
@@ -10,18 +21,19 @@ const sellsApi = baseApi.injectEndpoints({
           body: product,
         };
       },
-      invalidatesTags: ["shoes"],
+      invalidatesTags: ["shoes", "sells"],
     }),
-    getAllSell: builder.query({
-      query: (params) => {
+    deletSell: builder.mutation({
+      query: (id) => {
         return {
-          url: "/sells/allsells",
-          method: "GET",
-          body: params,
+          url: `/sells/delete-sells/${id}`,
+          method: "PATCH",
         };
       },
+      invalidatesTags: ["sells"],
     }),
   }),
 });
 
-export const { useAddSellMutation, useGetAllSellQuery } = sellsApi;
+export const { useAddSellMutation, useGetAllSellQuery, useDeletSellMutation } =
+  sellsApi;

@@ -51,6 +51,16 @@ const shoesApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["shoes"],
     }),
+    deleteMulltipleShoe: builder.mutation({
+      query: (ids) => {
+        return {
+          url: `/shoes/mulltiple-delete-shoes`,
+          method: "POST",
+          body: ids,
+        };
+      },
+      invalidatesTags: ["shoes"],
+    }),
   }),
 });
 
@@ -59,4 +69,5 @@ export const {
   useGetShoesWithEmailQuery,
   useUpdateShoesMutation,
   useDeleteShoeMutation,
+  useDeleteMulltipleShoeMutation,
 } = shoesApi;
