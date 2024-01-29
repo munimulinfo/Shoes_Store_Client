@@ -11,6 +11,7 @@ import UpdateShoes from "./UpdateShoes";
 import ShoesDetails from "./ShoesDetails";
 import Swal from "sweetalert2";
 import SearchModal from "./SearchModal";
+import CreateVarient from "./CreateVarient";
 const AllShoes = () => {
   const [filter, setFilter] = useState({});
   const [delet, setDelet] = useState<string[]>([]);
@@ -101,6 +102,7 @@ const AllShoes = () => {
               <th>brand</th>
               <th>Details</th>
               <th>Edit</th>
+              <th>duplicate</th>
               <th>Delete</th>
             </tr>
           </thead>
@@ -132,6 +134,9 @@ const AllShoes = () => {
 
                 <td className="space-x-2">
                   <UpdateShoes {...shoe}></UpdateShoes>
+                </td>
+                <td>
+                  <CreateVarient {...shoe}></CreateVarient>
                 </td>
                 <td>
                   <button
