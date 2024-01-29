@@ -1,6 +1,6 @@
 # Assignment -05(Path-2) SHOE-STORE-CLIENT
 
-### Live Server Link: https://shoes-store-nissan.netlify.app/api/v1
+### Live Server Link: https://shoes-store-nissan.netlify.app
 
 - At first clone my GitHub repo. then install all the packages.
 - To install all the packages. go to the terminal and command (npm i) and install All dependecis.
