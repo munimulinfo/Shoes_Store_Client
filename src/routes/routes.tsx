@@ -6,10 +6,12 @@ import AllShoes from "../pages/shoes/AllShoes";
 import ProtectRoute from "./ProtectRoute";
 import Allsels from "../pages/allsels/Allsels";
 import SellsHistory from "../pages/allsels/SellsHistory";
+import ErrorPage from "../pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    errorElement: <ErrorPage></ErrorPage>,
     element: (
       <ProtectRoute>
         <App></App>

@@ -107,12 +107,12 @@ const UpdateShoes = ({
       {isOpen && (
         <dialog
           id="my_modal_5"
-          className="modal modal-bottom py-5 sm:modal-middle md:w-1/2 mx-auto"
+          className="modal modal-bottom py-5 sm:modal-middle md:w-2/4 mx-auto"
           open
         >
           <form
             onSubmit={handleSubmit(handleFormData)}
-            className="border-[3px] p-8 h-full overflow-y-scroll relative w-full border-gray-300 rounded-lg bg-gray-100  auth-shadow"
+            className="border-[3px] p-8  h-full overflow-y-scroll relative w-full border-gray-300 rounded-lg bg-gray-100  auth-shadow"
             action=""
           >
             <h1 className="text-lg text-center mb-2 font-serif text-emerald-500 uppercase font-bold ">

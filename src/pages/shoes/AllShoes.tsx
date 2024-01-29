@@ -11,7 +11,6 @@ import UpdateShoes from "./UpdateShoes";
 import ShoesDetails from "./ShoesDetails";
 import Swal from "sweetalert2";
 import SearchModal from "./SearchModal";
-import { FaTrashCan } from "react-icons/fa6";
 const AllShoes = () => {
   const [filter, setFilter] = useState({});
   const [delet, setDelet] = useState<string[]>([]);
