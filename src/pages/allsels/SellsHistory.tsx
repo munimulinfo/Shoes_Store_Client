@@ -6,7 +6,7 @@ import {
   useDeletSellMutation,
   useGetAllSellQuery,
 } from "../../redux/featuers/sells/sellsApi";
-import ShoesDetails from "../shoes/ShoesDetails";
+import ShoesDetails from "../seller/shoes/ShoesDetails";
 
 const SellsHistory = () => {
   const [params, setParams] = useState({ filter: "" });
@@ -38,15 +38,15 @@ const SellsHistory = () => {
   };
 
   return (
-    <div>
-      <div className="flex justify-between mt-10 lg:mx-10 py-4 rounded-lg lg:px-8 gradient-color items-center">
-        <h1 className="uppercase text-2xl font-serif font-semibold text-white">
+    <div className="px-2 md:px-0">
+      <div className="flex justify-between md:mt-10 px-2 mt-16 lg:mx-10 py-4 rounded-lg md:px-8 gradient-color items-center">
+        <h1 className="uppercase md:text-2xl text-[14px] font-serif font-semibold text-white">
           Sells-History
         </h1>
         <div className="flex gap-4">
           <select
             onChange={(event) => setParams({ filter: event.target.value })}
-            className="select select-accent  w-full lg:w-56"
+            className="select select-accent max-w-sm lg:w-56"
           >
             <option disabled defaultValue="">
               Filter By Date
@@ -62,7 +62,7 @@ const SellsHistory = () => {
 
       {/* // product show */}
 
-      <div className="md:px-10 mt-10">
+      <div className="md:px-10 mt-10 sm:overflow-x-auto rounded overflow-y-auto">
         <table className="overflow-x-auto table rounded-xl border-2 shadow shdow-xl border-gray-200 bg-yellow-50 ">
           {/* head */}
           <thead className=" button-gradient text-white font-semiboald font-sans uppercase text-[12px]">

@@ -1,25 +1,12 @@
-import { useForm } from "react-hook-form";
+import { useAddShoesMutation } from "../../../redux/featuers/shoes/shoesApi";
+import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useState } from "react";
-import { FaRegEdit, FaSkating } from "react-icons/fa";
-import { useUpdateShoesMutation } from "../../redux/featuers/shoes/shoesApi";
+import { FaPersonSkating } from "react-icons/fa6";
+import { useAppSelector } from "../../../redux/hooks";
+import { TUpdateProps } from "./UpdateShoes";
 
-export type TUpdateProps = {
-  name: string;
-  quantity: string;
-  price: number;
-  releaseDate: string;
-  brand: string;
-  model: string;
-  style: string;
-  size: number;
-  color: string;
-  material: string;
-  image: string;
-  _id: string;
-};
-
-const UpdateShoes = ({
+const CreateVarient = ({
   name,
   quantity,
   price,
@@ -31,11 +18,11 @@ const UpdateShoes = ({
   color,
   material,
   image,
-  _id,
 }: TUpdateProps) => {
+  const user = useAppSelector((state) => state.auth.user);
+  const [addShoes, { isLoading }] = useAddShoesMutation();
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [updateShoes, { isLoading }] = useUpdateShoesMutation();
   const img_hosting_url = `https://api.imgbb.com/1/upload?key=1e026c5eba4e0751bd71f1436ae6da99`;
   //modal open function
   const openModal = () => {
@@ -46,9 +33,14 @@ const UpdateShoes = ({
     setIsOpen(false);
   };
 
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const handleFormData = async (data: any) => {
+  const handleFormData = async (data: FieldValues) => {
     try {
       setLoading(true);
       let imgUrl: string | undefined = undefined;
@@ -69,25 +61,25 @@ const UpdateShoes = ({
       }
 
       const shoeInfo = {
-        id: _id,
-        shoe: {
-          name: data?.name || name,
-          image: imgUrl || image,
-          quantity: parseInt(data?.quantity) || quantity,
-          price: parseInt(data?.price),
-          releaseDate: data?.releaseDate || releaseDate,
-          brand: data?.brand || brand,
-          model: data?.model || model,
-          style: data?.style || style,
-          size: parseInt(data?.size) || size,
-          color: data?.color || color,
-          material: data?.material || material,
-        },
+        name: data?.name,
+        image: imgUrl || image,
+        quantity: parseInt(data?.quantity),
+        price: parseInt(data?.price),
+        releaseDate: data?.releaseDate || new Date(),
+        brand: data?.brand,
+        model: data?.model,
+        style: data?.style,
+        size: parseInt(data?.size),
+        color: data?.color,
+        material: data?.meterial,
+        userEmail: user?.email,
+        userId: user?.userId,
       };
-      const result = await updateShoes(shoeInfo).unwrap();
+      const result = await addShoes(shoeInfo).unwrap();
+      reset();
       toast.success(`${result?.message}`);
     } catch (error: any) {
-      toast.error(error?.data?.message || "An error occurred");
+      toast.success(error?.data?.message);
     } finally {
       closeModal();
       setLoading(false);
@@ -98,25 +90,25 @@ const UpdateShoes = ({
     <div>
       <button
         onClick={openModal}
-        className="bg-fuchsia-400 rounded-full text-[15px] uppercase"
+        className="btn btn-sm text-[10px] font-serif bg-fuchsia-400 hover:bg-green-600 text-white rounded-lg uppercase"
       >
-        <FaRegEdit className="text-4xl p-2 rounded-full text-white" />
+        Create <br></br>Varient
       </button>
 
       {/* Forms inclued */}
       {isOpen && (
         <dialog
           id="my_modal_5"
-          className="modal modal-bottom py-5 sm:modal-middle md:w-2/4 mx-auto"
+          className="modal modal-bottom py-5 px-2 lg:px-0  flex justify-center items-center w-full"
           open
         >
           <form
             onSubmit={handleSubmit(handleFormData)}
-            className="border-[3px] p-8  h-full overflow-y-scroll relative w-full border-gray-300 rounded-lg bg-gray-100  auth-shadow"
+            className="border-[3px] overflow-y-scroll h-full p-8 relative border-gray-300 rounded-lg bg-gray-100 "
             action=""
           >
             <h1 className="text-lg text-center mb-2 font-serif text-emerald-500 uppercase font-bold ">
-              Update Shoe
+              ADD Shoes REQUIRED FORM FILL-UP
             </h1>
             {/* //first row  */}
             <div className="flex flex-col lg:flex-row gap-6 w-full">
@@ -127,10 +119,15 @@ const UpdateShoes = ({
                 <input
                   type="text"
                   defaultValue={name}
-                  {...register("name")}
+                  {...register("name", { required: true })}
                   placeholder="Enter Shoe Name"
                   className="input input-bordered"
                 />
+                {errors.name && (
+                  <span className="text-rose-500 animate-pulse">
+                    please provide Shoe Name
+                  </span>
+                )}
               </div>
 
               <div className="form-control w-full">
@@ -140,10 +137,15 @@ const UpdateShoes = ({
                 <input
                   type="number"
                   defaultValue={quantity}
-                  {...register("quantity")}
+                  {...register("quantity", { required: true })}
                   placeholder="Enter shoe quantity"
                   className="input input-bordered"
                 />
+                {errors.quantity && (
+                  <span className="text-rose-500 animate-pulse">
+                    please provide Shoe Quantity
+                  </span>
+                )}
               </div>
             </div>
 
@@ -156,10 +158,15 @@ const UpdateShoes = ({
                 <input
                   type="number"
                   defaultValue={price}
-                  {...register("price")}
+                  {...register("price", { required: true })}
                   placeholder="Enter price"
                   className="input input-bordered"
                 />
+                {errors.price && (
+                  <span className="text-rose-500 animate-pulse">
+                    please provide shoe price
+                  </span>
+                )}
               </div>
               <div className="form-control w-full">
                 <label className="label">
@@ -182,10 +189,17 @@ const UpdateShoes = ({
                 <input
                   type="text"
                   defaultValue={brand}
-                  {...register("brand")}
+                  {...register("brand", {
+                    required: true,
+                  })}
                   placeholder="Enter brand"
                   className="input input-bordered"
                 />
+                {errors.brand && (
+                  <span className="text-rose-500 animate-pulse">
+                    please provide shoe brand
+                  </span>
+                )}
               </div>
               <div className="form-control w-full">
                 <label className="label">
@@ -194,10 +208,17 @@ const UpdateShoes = ({
                 <input
                   type="text"
                   defaultValue={model}
-                  {...register("model")}
+                  {...register("model", {
+                    required: true,
+                  })}
                   placeholder="Enter model"
                   className="input input-bordered"
                 />
+                {errors.model && (
+                  <span className="text-rose-500 animate-pulse">
+                    please provide shoe model
+                  </span>
+                )}
               </div>
             </div>
             {/* //Fifth row  */}
@@ -209,10 +230,17 @@ const UpdateShoes = ({
                 <input
                   type="text"
                   defaultValue={color}
-                  {...register("color")}
+                  {...register("color", {
+                    required: true,
+                  })}
                   placeholder="Enter color"
                   className="input input-bordered"
                 />
+                {errors.color && (
+                  <span className="text-rose-500 animate-pulse">
+                    please provide shoe color
+                  </span>
+                )}
               </div>
               <div className="form-control w-full">
                 <label className="label">
@@ -220,7 +248,9 @@ const UpdateShoes = ({
                 </label>
                 <select
                   defaultValue={material}
-                  {...register("meterial")}
+                  {...register("meterial", {
+                    required: true,
+                  })}
                   className="select select-bordered w-full "
                 >
                   <option disabled value="">
@@ -229,6 +259,11 @@ const UpdateShoes = ({
                   <option value="leather">leather</option>
                   <option value="fabric">fabric</option>
                 </select>
+                {errors.meterial && (
+                  <span className="text-rose-500 animate-pulse">
+                    Please provide shoe metarial
+                  </span>
+                )}
               </div>
             </div>
             {/* sisth row */}
@@ -240,10 +275,17 @@ const UpdateShoes = ({
                 <input
                   type="number"
                   defaultValue={size}
-                  {...register("size")}
+                  {...register("size", {
+                    required: true,
+                  })}
                   placeholder="Enter shoe size"
                   className="input input-bordered"
                 />
+                {errors.size && (
+                  <span className="text-rose-500 animate-pulse">
+                    please provide shoe size
+                  </span>
+                )}
               </div>
               <div className="form-control w-full">
                 <label className="label">
@@ -252,10 +294,17 @@ const UpdateShoes = ({
                 <input
                   type="text"
                   defaultValue={style}
-                  {...register("style")}
+                  {...register("style", {
+                    required: true,
+                  })}
                   placeholder="Enter Shoe Style"
                   className="input input-bordered w-full"
                 />
+                {errors.style && (
+                  <span className="text-rose-500 animate-pulse">
+                    please upload shoe style
+                  </span>
+                )}
               </div>
             </div>
             {/* // 7th row  */}
@@ -278,9 +327,9 @@ const UpdateShoes = ({
                 className="btn bg-emerald-500 text-white  font-serif hover:bg-emerald-500 border-0"
               >
                 {loading || isLoading ? (
-                  <FaSkating className="animate-bounce" />
+                  <FaPersonSkating className="animate-bounce" />
                 ) : (
-                  "update Shoe"
+                  "Add Product"
                 )}
               </button>
             </div>
@@ -301,4 +350,4 @@ const UpdateShoes = ({
   );
 };
 
-export default UpdateShoes;
+export default CreateVarient;

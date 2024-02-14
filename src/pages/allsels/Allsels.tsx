@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useGetShoesWithEmailQuery } from "../../redux/featuers/shoes/shoesApi";
-import ShoesDetails from "../shoes/ShoesDetails";
+import ShoesDetails from "../seller/shoes/ShoesDetails";
 import SelsForm from "./SelsForm";
 
 const Allsels = () => {
@@ -8,24 +8,24 @@ const Allsels = () => {
   const { data: shoes } = useGetShoesWithEmailQuery({ name });
   console.log(shoes);
   return (
-    <div>
-      <div className="flex justify-between mt-10 lg:mx-10 py-4 rounded-lg lg:px-8 gradient-color items-center">
-        <h1 className="uppercase text-2xl font-serif font-semibold text-white">
+    <div className="px-2 md:px-0">
+      <div className="flex justify-between px-2 md:mt-10 mt-16 lg:mx-10 py-4 rounded-lg lg:px-8 gradient-color items-center">
+        <h1 className="uppercase md:text-2xl text-[15px] font-serif font-semibold text-white">
           Manage-Sels
         </h1>
-        <div className="flex gap-4">
+        <div className="flex md:gap-4">
           <input
             onChange={(e) => setName(e.target.value)}
             type="search"
             placeholder="Search By Product name"
-            className="input input-bordered input-accent w-full max-w-xl"
+            className="input input-bordered input-accent max-w-[150px] md:max-w-xl"
           />
         </div>
       </div>
 
       {/* // product show */}
 
-      <div className="md:px-10 mt-10">
+      <div className="md:px-10 mt-10 sm:overflow-x-auto rounded overflow-y-auto ">
         <table className="overflow-x-auto table rounded-xl border-2 shadow shdow-xl border-gray-200 bg-yellow-50 ">
           {/* head */}
           <thead className=" button-gradient text-white font-semiboald font-sans uppercase text-[12px]">

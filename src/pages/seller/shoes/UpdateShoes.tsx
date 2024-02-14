@@ -1,12 +1,42 @@
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { useState } from "react";
-import { Dispatch, SetStateAction } from "react";
-type PropsSearch = {
-  setFilter: Dispatch<SetStateAction<object>>;
-};
-const SearchModal = ({ setFilter }: PropsSearch) => {
-  const [isOpen, setIsOpen] = useState(false);
+import { FaRegEdit, FaSkating } from "react-icons/fa";
+import { useUpdateShoesMutation } from "../../../redux/featuers/shoes/shoesApi";
 
+export type TUpdateProps = {
+  name: string;
+  quantity: string;
+  price: number;
+  releaseDate: string;
+  brand: string;
+  model: string;
+  style: string;
+  size: number;
+  color: string;
+  material: string;
+  image: string;
+  _id: string;
+};
+
+const UpdateShoes = ({
+  name,
+  quantity,
+  price,
+  releaseDate,
+  brand,
+  model,
+  style,
+  size,
+  color,
+  material,
+  image,
+  _id,
+}: TUpdateProps) => {
+  const [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [updateShoes, { isLoading }] = useUpdateShoesMutation();
+  const img_hosting_url = `https://api.imgbb.com/1/upload?key=1e026c5eba4e0751bd71f1436ae6da99`;
   //modal open function
   const openModal = () => {
     setIsOpen(true);
@@ -16,55 +46,77 @@ const SearchModal = ({ setFilter }: PropsSearch) => {
     setIsOpen(false);
   };
 
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit } = useForm();
 
-  const handleFormData = (data: any) => {
-    const isValidNumber = (value: any) =>
-      !isNaN(value) && typeof value === "number";
-    const shoeInfo = {
-      quantity: isValidNumber(data?.quantity)
-        ? parseInt(data?.quantity)
-        : undefined,
-      price: isValidNumber(data?.price) ? parseInt(data?.price) : undefined,
-      releaseDate: data?.releaseDate,
-      brand: data?.brand,
-      model: data?.model,
-      style: data?.style,
-      size: isValidNumber(data?.size) ? parseInt(data?.size) : undefined,
-      color: data?.color,
-      material: data?.material,
-    };
-    reset();
-    const filteredShoeInfo = Object.fromEntries(
-      Object.entries(shoeInfo).filter(([_, value]) => value !== undefined)
-    );
-    setFilter(filteredShoeInfo);
-    closeModal();
+  const handleFormData = async (data: any) => {
+    try {
+      setLoading(true);
+      let imgUrl: string | undefined = undefined;
+
+      if (data.image?.length > 0) {
+        const imgdata = new FormData();
+        imgdata.append("image", data?.image[0]);
+
+        const response = await fetch(img_hosting_url, {
+          method: "POST",
+          body: imgdata,
+        });
+
+        const uploadImage = await response.json();
+        if (uploadImage.success) {
+          imgUrl = uploadImage?.data?.display_url;
+        }
+      }
+
+      const shoeInfo = {
+        id: _id,
+        shoe: {
+          name: data?.name || name,
+          image: imgUrl || image,
+          quantity: parseInt(data?.quantity) || quantity,
+          price: parseInt(data?.price),
+          releaseDate: data?.releaseDate || releaseDate,
+          brand: data?.brand || brand,
+          model: data?.model || model,
+          style: data?.style || style,
+          size: parseInt(data?.size) || size,
+          color: data?.color || color,
+          material: data?.material || material,
+        },
+      };
+      const result = await updateShoes(shoeInfo).unwrap();
+      toast.success(`${result?.message}`);
+    } catch (error: any) {
+      toast.error(error?.data?.message || "An error occurred");
+    } finally {
+      closeModal();
+      setLoading(false);
+    }
   };
 
   return (
     <div>
       <button
         onClick={openModal}
-        className="btn px-8 text-[15px] font-serif button-gradient text-white rounded-full uppercase"
+        className="bg-fuchsia-400 rounded-full text-[15px] uppercase"
       >
-        Filter Shoes
+        <FaRegEdit className="text-4xl p-2 rounded-full text-white" />
       </button>
 
       {/* Forms inclued */}
       {isOpen && (
         <dialog
           id="my_modal_5"
-          className="modal modal-bottom py-5 sm:modal-middle md:w-1/2 mx-auto"
+          className="modal modal-bottom px-2 lg:px-0  py-5 sm:modal-middle md:w-2/4 mx-auto"
           open
         >
           <form
             onSubmit={handleSubmit(handleFormData)}
-            className="border-[3px] p-8 h-full overflow-y-scroll relative w-full border-gray-300 rounded-lg bg-gray-100  auth-shadow"
+            className="border-[3px] p-8  h-full overflow-y-scroll relative w-full border-gray-300 rounded-lg bg-gray-100  auth-shadow"
             action=""
           >
             <h1 className="text-lg text-center mb-2 font-serif text-emerald-500 uppercase font-bold ">
-              Filter Shoes
+              Update Shoe
             </h1>
             {/* //first row  */}
             <div className="flex flex-col lg:flex-row gap-6 w-full">
@@ -74,6 +126,7 @@ const SearchModal = ({ setFilter }: PropsSearch) => {
                 </label>
                 <input
                   type="text"
+                  defaultValue={name}
                   {...register("name")}
                   placeholder="Enter Shoe Name"
                   className="input input-bordered"
@@ -86,6 +139,7 @@ const SearchModal = ({ setFilter }: PropsSearch) => {
                 </label>
                 <input
                   type="number"
+                  defaultValue={quantity}
                   {...register("quantity")}
                   placeholder="Enter shoe quantity"
                   className="input input-bordered"
@@ -101,6 +155,7 @@ const SearchModal = ({ setFilter }: PropsSearch) => {
                 </label>
                 <input
                   type="number"
+                  defaultValue={price}
                   {...register("price")}
                   placeholder="Enter price"
                   className="input input-bordered"
@@ -112,6 +167,7 @@ const SearchModal = ({ setFilter }: PropsSearch) => {
                 </label>
                 <input
                   type="date"
+                  defaultValue={releaseDate}
                   {...register("releaseDate")}
                   className="input input-bordered"
                 />
@@ -125,6 +181,7 @@ const SearchModal = ({ setFilter }: PropsSearch) => {
                 </label>
                 <input
                   type="text"
+                  defaultValue={brand}
                   {...register("brand")}
                   placeholder="Enter brand"
                   className="input input-bordered"
@@ -136,6 +193,7 @@ const SearchModal = ({ setFilter }: PropsSearch) => {
                 </label>
                 <input
                   type="text"
+                  defaultValue={model}
                   {...register("model")}
                   placeholder="Enter model"
                   className="input input-bordered"
@@ -150,6 +208,7 @@ const SearchModal = ({ setFilter }: PropsSearch) => {
                 </label>
                 <input
                   type="text"
+                  defaultValue={color}
                   {...register("color")}
                   placeholder="Enter color"
                   className="input input-bordered"
@@ -160,6 +219,7 @@ const SearchModal = ({ setFilter }: PropsSearch) => {
                   <span className="label-color">material</span>
                 </label>
                 <select
+                  defaultValue={material}
                   {...register("meterial")}
                   className="select select-bordered w-full "
                 >
@@ -179,6 +239,7 @@ const SearchModal = ({ setFilter }: PropsSearch) => {
                 </label>
                 <input
                   type="number"
+                  defaultValue={size}
                   {...register("size")}
                   placeholder="Enter shoe size"
                   className="input input-bordered"
@@ -190,11 +251,24 @@ const SearchModal = ({ setFilter }: PropsSearch) => {
                 </label>
                 <input
                   type="text"
+                  defaultValue={style}
                   {...register("style")}
                   placeholder="Enter Shoe Style"
                   className="input input-bordered w-full"
                 />
               </div>
+            </div>
+            {/* // 7th row  */}
+
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-color">shoe image</span>
+              </label>
+              <input
+                type="file"
+                {...register("image")}
+                className="file-input "
+              />
             </div>
 
             {/* // submit button  */}
@@ -203,7 +277,11 @@ const SearchModal = ({ setFilter }: PropsSearch) => {
                 type="submit"
                 className="btn bg-emerald-500 text-white  font-serif hover:bg-emerald-500 border-0"
               >
-                Filter
+                {loading || isLoading ? (
+                  <FaSkating className="animate-bounce" />
+                ) : (
+                  "update Shoe"
+                )}
               </button>
             </div>
             {/* //model close button  */}
@@ -223,4 +301,4 @@ const SearchModal = ({ setFilter }: PropsSearch) => {
   );
 };
 
-export default SearchModal;
+export default UpdateShoes;

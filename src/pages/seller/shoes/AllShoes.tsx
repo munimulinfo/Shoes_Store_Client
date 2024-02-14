@@ -2,7 +2,7 @@ import {
   useDeleteMulltipleShoeMutation,
   useDeleteShoeMutation,
   useGetShoesWithEmailQuery,
-} from "../../redux/featuers/shoes/shoesApi";
+} from "../../../redux/featuers/shoes/shoesApi";
 import { useState } from "react";
 import AddShoes from "./AddShoes";
 import { FaTrash } from "react-icons/fa";
@@ -14,6 +14,7 @@ import SearchModal from "./SearchModal";
 import CreateVarient from "./CreateVarient";
 const AllShoes = () => {
   const [filter, setFilter] = useState({});
+  console.log(filter, "inside component");
   const [delet, setDelet] = useState<string[]>([]);
   const { data: shoes, isLoading } = useGetShoesWithEmailQuery(filter);
   const [deleteShoe] = useDeleteShoeMutation();
@@ -21,7 +22,6 @@ const AllShoes = () => {
   if (isLoading) {
     return <p>loding....</p>;
   }
-  console.log(delet);
 
   const handleCheckboxChange = (shoeId: string) => {
     setDelet((prevDelet) => {
@@ -68,12 +68,12 @@ const AllShoes = () => {
   };
 
   return (
-    <div>
-      <div className="flex justify-between mt-10 lg:mx-10 py-4 rounded-lg lg:px-8 gradient-color items-center">
-        <h1 className="uppercase text-2xl font-serif font-semibold text-white">
+    <div className="px-2 md:px-0">
+      <div className="flex justify-between md:mx-10 px-2 md:mt-10 mt-16 py-4 rounded-lg lg:px-8 gradient-color">
+        <h1 className="uppercase md:text-2xl text-[12px] font-serif font-semibold text-white">
           Manage-Shoes
         </h1>
-        <div className="flex gap-4">
+        <div className="flex md:gap-4 gap-2">
           <AddShoes></AddShoes>
           <SearchModal setFilter={setFilter}></SearchModal>
         </div>
@@ -81,8 +81,8 @@ const AllShoes = () => {
 
       {/* // product show */}
 
-      <div className="md:px-10 mt-10">
-        <table className="overflow-x-auto table rounded-xl border-2 shadow shdow-xl border-gray-200 bg-yellow-50 ">
+      <div className="md:px-10 mt-10 sm:overflow-x-auto rounded overflow-y-auto">
+        <table className=" mb-16 table rounded-xl border-2 shadow shdow-xl border-gray-200 bg-yellow-50 ">
           {/* head */}
           <thead className=" button-gradient text-white font-semiboald font-sans uppercase text-[12px]">
             <tr className="">
@@ -106,7 +106,7 @@ const AllShoes = () => {
               <th>Delete</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="overflow-x-auto overflow-y-auto ">
             {shoes?.data?.map((shoe: any, index: number) => (
               <tr key={index} className="border-b border-slate-5">
                 <td>

@@ -1,9 +1,9 @@
-import { useAddShoesMutation } from "../../redux/featuers/shoes/shoesApi";
+import { useAddShoesMutation } from "../../../redux/featuers/shoes/shoesApi";
 import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useState } from "react";
 import { FaPersonSkating } from "react-icons/fa6";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppSelector } from "../../../redux/hooks";
 
 const AddShoes = () => {
   const user = useAppSelector((state) => state.auth.user);
@@ -72,7 +72,7 @@ const AddShoes = () => {
     <div>
       <button
         onClick={openModal}
-        className="btn px-8 text-[15px] font-serif button-gradient text-white rounded-full uppercase"
+        className="btn md:px-8 px-2 md:text-[15px] text-[10px] font-serif button-gradient text-white rounded-full uppercase"
       >
         Add Shoe
       </button>
@@ -81,12 +81,12 @@ const AddShoes = () => {
       {isOpen && (
         <dialog
           id="my_modal_5"
-          className="modal modal-bottom py-5 sm:modal-middle md:w-1/2 mx-auto"
+          className="modal modal-bottom py-5 px-2 lg:px-0 sm:modal-middle md:w-1/2 mx-auto"
           open
         >
           <form
             onSubmit={handleSubmit(handleFormData)}
-            className="border-[3px] p-8 h-full overflow-y-scroll relative w-full border-gray-300 rounded-lg bg-gray-100  auth-shadow"
+            className="border-[3px] md:p-8 p-5 h-full overflow-y-scroll relative w-full border-gray-300 rounded-lg bg-gray-100  auth-shadow"
             action=""
           >
             <h1 className="text-lg text-center mb-2 font-serif text-emerald-500 uppercase font-bold ">

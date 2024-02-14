@@ -1,15 +1,51 @@
 import { baseApi } from "../../api/baseApi";
-
 const shoesApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getShoesWithEmail: builder.query({
-      query: (filter) => {
+      query: ({
+        name,
+        quantity,
+        price,
+        releaseDate,
+        brand,
+        model,
+        style,
+        size,
+        color,
+        material,
+      }) => {
         const params = new URLSearchParams();
-        Object.entries(filter).forEach(([key, value]) => {
-          if (value !== undefined && value !== null) {
-            params.append(key, String(value));
-          }
-        });
+        if (name) {
+          params.append("name", name);
+        }
+        if (quantity) {
+          params.append("quantity", quantity);
+        }
+        if (price) {
+          params.append("price", price);
+        }
+        if (releaseDate) {
+          params.append("releaseDate", releaseDate);
+        }
+        if (brand) {
+          params.append("brand", brand);
+        }
+        if (model) {
+          params.append("model", model);
+        }
+        if (style) {
+          params.append("style", style);
+        }
+        if (color) {
+          params.append("color", color);
+        }
+        if (material) {
+          params.append("material", material);
+        }
+        if (size) {
+          params.append("size", size);
+        }
+
         return {
           url: `/shoes/get-shoes`,
           method: "GET",

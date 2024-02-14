@@ -66,7 +66,7 @@ const SelsForm = ({ quantity, _id }: TSelsFormProps) => {
       {isOpen && (
         <dialog
           id="my_modal_5"
-          className="modal modal-bottom sm:modal-middle md:w-1/4 mx-auto"
+          className="modal px-2 lg:px-0  modal-bottom sm:modal-middle md:w-1/4 mx-auto"
           open
         >
           <form
