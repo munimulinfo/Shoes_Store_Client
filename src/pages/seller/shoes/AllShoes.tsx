@@ -1,7 +1,7 @@
 import {
   useDeleteMulltipleShoeMutation,
   useDeleteShoeMutation,
-  useGetShoesWithEmailQuery,
+  useGetAllShoesQuery,
 } from "../../../redux/featuers/shoes/shoesApi";
 import { useState } from "react";
 import AddShoes from "./AddShoes";
@@ -16,7 +16,7 @@ const AllShoes = () => {
   const [filter, setFilter] = useState({});
   console.log(filter, "inside component");
   const [delet, setDelet] = useState<string[]>([]);
-  const { data: shoes, isLoading } = useGetShoesWithEmailQuery(filter);
+  const { data: shoes, isLoading } = useGetAllShoesQuery(filter);
   const [deleteShoe] = useDeleteShoeMutation();
   const [deleteMulltipleShoe] = useDeleteMulltipleShoeMutation();
   if (isLoading) {

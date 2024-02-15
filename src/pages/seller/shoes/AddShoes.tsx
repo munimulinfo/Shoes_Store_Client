@@ -7,7 +7,6 @@ import { useAppSelector } from "../../../redux/hooks";
 
 const AddShoes = () => {
   const user = useAppSelector((state) => state.auth.user);
-  console.log(user);
   const [addShoes, { isLoading }] = useAddShoesMutation();
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -33,24 +32,24 @@ const AddShoes = () => {
       setLoading(true);
       const imgdata = new FormData();
       imgdata.append("image", data?.image[0]);
-
       const response = await fetch(img_hosting_url, {
         method: "POST",
         body: imgdata,
       });
       const uploadImage = await response.json();
-      if (uploadImage.success) {
+      if (uploadImage?.success) {
         const imgUrl = uploadImage?.data?.display_url;
         const shoeInfo = {
           name: data?.name,
           image: imgUrl,
-          quantity: parseInt(data?.quantity),
-          price: parseInt(data?.price),
+          productId: `mh-${Math.random().toString().substring(2, 9)}`,
+          quantity: Number(data?.quantity),
+          price: Number(data?.price),
           releaseDate: data?.releaseDate,
           brand: data?.brand,
           model: data?.model,
           style: data?.style,
-          size: parseInt(data?.size),
+          size: Number(data?.size),
           color: data?.color,
           material: data?.meterial,
           userEmail: user?.email,

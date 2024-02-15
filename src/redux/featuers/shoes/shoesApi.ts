@@ -1,7 +1,7 @@
 import { baseApi } from "../../api/baseApi";
 const shoesApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getShoesWithEmail: builder.query({
+    getAllShoes: builder.query({
       query: ({
         name,
         quantity,
@@ -102,7 +102,7 @@ const shoesApi = baseApi.injectEndpoints({
 
 export const {
   useAddShoesMutation,
-  useGetShoesWithEmailQuery,
+  useGetAllShoesQuery,
   useUpdateShoesMutation,
   useDeleteShoeMutation,
   useDeleteMulltipleShoeMutation,

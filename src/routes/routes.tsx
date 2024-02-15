@@ -4,13 +4,12 @@ import Register from "../pages/Register";
 import Login from "../pages/Login";
 import AllShoes from "../pages/seller/shoes/AllShoes";
 import ProtectRoute from "./ProtectRoute";
-import Allsels from "../pages/allsels/Allsels";
-import SellsHistory from "../pages/allsels/SellsHistory";
+import Allsels from "../pages/buyer/allsels/Allsels";
+import SellsHistory from "../pages/buyer/allsels/SellsHistory";
 import ErrorPage from "../pages/ErrorPage";
-import ViewAllShoes from "../pages/buyer/ViewAllShoes";
-import VerifyShoes from "../pages/buyer/VerifyShoes";
-import CutomizedShoe from "../pages/buyer/CutomizedShoe";
-import ShoePolisService from "../pages/buyer/ShoePolisService";
+import VerifyShoes from "../pages/buyer/service/VerifyShoes";
+import CutomizedShoe from "../pages/buyer/service/CutomizedShoe";
+import ShoePolisService from "../pages/buyer/service/ShoePolisService";
 
 const router = createBrowserRouter([
   {
@@ -46,14 +45,7 @@ const router = createBrowserRouter([
           </ProtectRoute>
         ),
       },
-      {
-        path: "view-allShoes",
-        element: (
-          <ProtectRoute>
-            <ViewAllShoes></ViewAllShoes>
-          </ProtectRoute>
-        ),
-      },
+
       {
         path: "verify-shoes",
         element: (

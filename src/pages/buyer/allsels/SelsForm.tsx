@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { FaCartPlus } from "react-icons/fa6";
 import { FaPersonSkating } from "react-icons/fa6";
-import { useAddSellMutation } from "../../redux/featuers/sells/sellsApi";
-import { useAppSelector } from "../../redux/hooks";
+import { useAddSellMutation } from "../../../redux/featuers/sells/sellsApi";
+import { useAppSelector } from "../../../redux/hooks";
 type TSelsFormProps = {
   quantity: number;
   _id: string;
@@ -30,7 +30,7 @@ const SelsForm = ({ quantity, _id }: TSelsFormProps) => {
   } = useForm();
   const handleSelsForm = async (data: any) => {
     try {
-      if (parseInt(data?.shoeQuantity) > quantity) {
+      if (Number(data?.shoeQuantity) > quantity) {
         return toast.error(
           `At this time, the requested quantity is not available in stock: ${data?.shoeQuantity} current stock is ${quantity}`
         );
@@ -39,7 +39,7 @@ const SelsForm = ({ quantity, _id }: TSelsFormProps) => {
       const product = {
         producId: _id,
         name: data.name,
-        shoeQuantity: parseInt(data?.shoeQuantity, 10),
+        shoeQuantity: Number(data?.shoeQuantity),
         sellDate: data?.sellDate,
       };
       const res = await addSell(product).unwrap();

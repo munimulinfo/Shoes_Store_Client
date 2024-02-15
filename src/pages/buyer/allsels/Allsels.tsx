@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { useGetShoesWithEmailQuery } from "../../redux/featuers/shoes/shoesApi";
-import ShoesDetails from "../seller/shoes/ShoesDetails";
+import { useGetAllShoesQuery } from "../../../redux/featuers/shoes/shoesApi";
+import ShoesDetails from "../../seller/shoes/ShoesDetails";
 import SelsForm from "./SelsForm";
 
 const Allsels = () => {
   const [name, setName] = useState("");
-  const { data: shoes } = useGetShoesWithEmailQuery({ name });
-  console.log(shoes);
+  const { data: shoes } = useGetAllShoesQuery({ name });
   return (
     <div className="px-2 md:px-0">
       <div className="flex justify-between px-2 md:mt-10 mt-16 lg:mx-10 py-4 rounded-lg lg:px-8 gradient-color items-center">
@@ -17,13 +16,11 @@ const Allsels = () => {
           <input
             onChange={(e) => setName(e.target.value)}
             type="search"
-            placeholder="Search By Product name"
+            placeholder="Search By ShoeName"
             className="input input-bordered input-accent max-w-[150px] md:max-w-xl"
           />
         </div>
       </div>
-
-      {/* // product show */}
 
       <div className="md:px-10 mt-10 sm:overflow-x-auto rounded overflow-y-auto ">
         <table className="overflow-x-auto table rounded-xl border-2 shadow shdow-xl border-gray-200 bg-yellow-50 ">

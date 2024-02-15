@@ -8,7 +8,7 @@
 }
 
 .label-color {
-  @apply label-text font-bold font-serif text-emerald-500;
+  @apply label-text font-bold font-serif text-black;
 }
 
 .p-text {

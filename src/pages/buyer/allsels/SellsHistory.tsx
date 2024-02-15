@@ -5,8 +5,8 @@ import Swal from "sweetalert2";
 import {
   useDeletSellMutation,
   useGetAllSellQuery,
-} from "../../redux/featuers/sells/sellsApi";
-import ShoesDetails from "../seller/shoes/ShoesDetails";
+} from "../../../redux/featuers/sells/sellsApi";
+import ShoesDetails from "../../seller/shoes/ShoesDetails";
 
 const SellsHistory = () => {
   const [params, setParams] = useState({ filter: "" });

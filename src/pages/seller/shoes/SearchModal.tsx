@@ -99,7 +99,7 @@ const SearchModal = ({ setFilter }: TPropsSearch) => {
                     type="range"
                     min={0}
                     {...register("price")}
-                    value={10000}
+                    max={10000}
                     onChange={handleChange}
                     className="range range-success range-md"
                   />

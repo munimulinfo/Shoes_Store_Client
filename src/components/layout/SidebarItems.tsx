@@ -5,9 +5,7 @@ export const sellerLink = (
     <li className="button-gradient py-2 uppercase px-4 text-white rounded-lg hover:button-gradient">
       <Link to={"/"}>Manage Shoes</Link>
     </li>
-    <li className="button-gradient py-2 uppercase px-4 text-white rounded-lg">
-      <Link to={"/sels"}>Manage Sels</Link>
-    </li>
+
     <li className="button-gradient py-2 uppercase px-4 text-white rounded-lg">
       <Link to={"/sels-history"}>Sells History</Link>
     </li>
@@ -16,14 +14,14 @@ export const sellerLink = (
 
 export const buyerLink = (
   <>
-    <li className="button-gradient py-2 uppercase px-4 text-white rounded-lg hover:button-gradient">
-      <Link to={"/view-allShoes"}>View AllShoes</Link>
+    <li className="button-gradient py-2 uppercase px-4 text-white rounded-lg">
+      <Link to={"/sels"}>Manage Sels</Link>
     </li>
     <li className="button-gradient py-2 uppercase px-4 text-white rounded-lg">
       <Link to={"/verify-shoes"}>Verify Shoes</Link>
     </li>
     <li className="button-gradient py-2 uppercase px-4 text-white rounded-lg">
-      <Link to={"/shoePolish-service"}>Shoe Service</Link>
+      <Link to={"/shoePolish-service"}>Shoe Polish</Link>
     </li>
     <li className="button-gradient py-2 uppercase px-4 text-white rounded-lg">
       <Link to={"/customized-shoe"}>Customized Shoe</Link>
