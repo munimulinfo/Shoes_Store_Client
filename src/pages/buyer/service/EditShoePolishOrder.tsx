@@ -1,13 +1,29 @@
 import { FieldValues, useForm } from "react-hook-form";
 import { useState } from "react";
-import { useAppSelector } from "../../../redux/hooks";
-import { useAddShoePolishRequestMutation } from "../../../redux/featuers/shoesService/shoeService.Api";
 import { toast } from "sonner";
+import { FaRegEdit } from "react-icons/fa";
+import { useUpdateShoePolishRequestMutation } from "../../../redux/featuers/shoesService/shoeService.Api";
+type TEditShoePloish = {
+  _id: string;
+  phoneNumber: string;
+  shoeImage: string;
+  address: string;
+  polishType: string;
+  shineLevel: string;
+  specialInstructions: string;
+};
 
-const AddPolishRequest = () => {
+const EditShoePolishOrder = ({
+  _id,
+  phoneNumber,
+  shoeImage,
+  address,
+  polishType,
+  shineLevel,
+  specialInstructions,
+}: TEditShoePloish) => {
   const [isOpen, setIsOpen] = useState(false);
-  const user = useAppSelector((state) => state.auth.user);
-  const [addPolishRequest] = useAddShoePolishRequestMutation();
+  const [updateShoePolishRequest] = useUpdateShoePolishRequestMutation();
   const img_hosting_url = `https://api.imgbb.com/1/upload?key=1e026c5eba4e0751bd71f1436ae6da99`;
 
   //Modl Function
@@ -19,55 +35,52 @@ const AddPolishRequest = () => {
   };
 
   //Search Form Handle
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const handleFormData = async (data: FieldValues) => {
     try {
       const toastId = toast.loading("Send Request.......");
-      const imgdata = new FormData();
-      imgdata.append("image", data?.shoeImage[0]);
-      const response = await fetch(img_hosting_url, {
-        method: "POST",
-        body: imgdata,
-      });
-      const uploadImage = await response.json();
-      if (uploadImage.success) {
-        const imgUrl = uploadImage?.data?.display_url;
-        const polishInfo = {
-          name: user!.name,
-          userId: user!.userId,
-          email: user?.email,
-          orderNo: `sp-${Math.random().toString().substring(2, 7)}`,
+      let imgUrl: string | undefined = undefined;
+      if (data?.shoeImage?.length > 0) {
+        const imgdata = new FormData();
+        imgdata.append("image", data?.image[0]);
+
+        const response = await fetch(img_hosting_url, {
+          method: "POST",
+          body: imgdata,
+        });
+        const uploadImage = await response.json();
+        if (uploadImage.success) {
+          imgUrl = uploadImage?.data?.display_url;
+        }
+      }
+
+      const polishInfo = {
+        id: _id,
+        data: {
           phoneNumber: data.phoneNumber,
-          shoeImage: imgUrl,
+          shoeImage: imgUrl ? imgUrl : shoeImage,
           address: data.address,
           polishType: data.polishType,
           shineLevel: data.shineLevel,
           specialInstructions: data.specialInstructions,
-        };
-        const res = await addPolishRequest(polishInfo).unwrap();
-        toast.success(res?.message, { id: toastId });
-        reset();
-        closeModal();
-      }
+        },
+      };
+      const res = await updateShoePolishRequest(polishInfo).unwrap();
+      toast.success(res?.message, { id: toastId });
+      reset();
+      closeModal();
     } catch (error) {
       console.log(error);
     }
   };
 
-  //delet ShoePolish request
-
   return (
     <div>
       <button
         onClick={openModal}
-        className="btn md:px-8 px-2 md:text-[15px] text-[10px] font-serif button-gradient text-white rounded-full uppercase"
+        className="bg-fuchsia-400 rounded-full text-[15px] uppercase"
       >
-        New Request
+        <FaRegEdit className="text-4xl p-2 rounded-full text-white" />
       </button>
 
       {/* Forms inclued */}
@@ -81,15 +94,11 @@ const AddPolishRequest = () => {
                 </label>
                 <input
                   type="text"
-                  {...register("phoneNumber", { required: true })}
+                  defaultValue={phoneNumber}
+                  {...register("phoneNumber")}
                   placeholder="Enter you Number"
                   className="input input-bordered input-error"
                 />
-                {errors.phoneNumber && (
-                  <span className="text-rose-500 animate-pulse">
-                    please provide valid Phone Number
-                  </span>
-                )}
               </div>
               <div className="form-control w-full">
                 <label className="label">
@@ -97,15 +106,11 @@ const AddPolishRequest = () => {
                 </label>
                 <input
                   type="text"
-                  {...register("address", { required: true })}
+                  {...register("address")}
+                  defaultValue={address}
                   placeholder="Enter you Address"
                   className="input input-bordered input-error"
                 />
-                {errors.address && (
-                  <span className="text-rose-500 animate-pulse">
-                    please provide Address
-                  </span>
-                )}
               </div>
 
               {/*Third  row  */}
@@ -115,7 +120,8 @@ const AddPolishRequest = () => {
                     <span className="label-color">PolishType</span>
                   </label>
                   <select
-                    {...register("polishType", { required: true })}
+                    {...register("polishType")}
+                    defaultValue={polishType}
                     className="select select-error select-bordered w-full "
                   >
                     <option disabled value="">
@@ -125,18 +131,14 @@ const AddPolishRequest = () => {
                     <option value="premium">Premium</option>
                     <option value="custom">Custom</option>
                   </select>
-                  {errors.polishType && (
-                    <span className="text-rose-500 animate-pulse">
-                      please provide PolishType
-                    </span>
-                  )}
                 </div>
                 <div className="form-control w-full">
                   <label className="label">
                     <span className="label-color">ShineLevel</span>
                   </label>
                   <select
-                    {...register("shineLevel", { required: true })}
+                    {...register("shineLevel")}
+                    defaultValue={shineLevel}
                     className="select select-error select-bordered w-full "
                   >
                     <option disabled value="">
@@ -146,11 +148,6 @@ const AddPolishRequest = () => {
                     <option value="medium">Medium</option>
                     <option value="highGloss">HighGloss</option>
                   </select>
-                  {errors.shineLevel && (
-                    <span className="text-rose-500 animate-pulse">
-                      please provide shineLevel
-                    </span>
-                  )}
                 </div>
               </div>
 
@@ -162,14 +159,9 @@ const AddPolishRequest = () => {
                   </label>
                   <input
                     type="file"
-                    {...register("shoeImage", { required: true })}
+                    {...register("shoeImage")}
                     className="file-input file-input-error "
                   />
-                  {errors.shoeImage && (
-                    <span className="text-rose-500 animate-pulse">
-                      please provide shoeImage
-                    </span>
-                  )}
                 </div>
               </div>
 
@@ -180,15 +172,11 @@ const AddPolishRequest = () => {
                   <span className="label-color">specialInstructions</span>
                 </label>
                 <textarea
-                  {...register("specialInstructions", { required: true })}
+                  {...register("specialInstructions")}
                   placeholder="write"
+                  defaultValue={specialInstructions}
                   className="textarea textarea-error"
                 />
-                {errors.specialInstructions && (
-                  <span className="text-rose-500 animate-pulse">
-                    please provide specialInstructions
-                  </span>
-                )}
               </div>
 
               {/* // submit button  */}
@@ -218,4 +206,4 @@ const AddPolishRequest = () => {
   );
 };
 
-export default AddPolishRequest;
+export default EditShoePolishOrder;
