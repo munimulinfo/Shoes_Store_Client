@@ -5,6 +5,7 @@ type TUpdateProps = {
   name: string;
   quantity: string;
   price: number;
+  productId: string;
   releaseDate: string;
   brand: string;
   model: string;
@@ -28,6 +29,7 @@ const ShoesDetails = ({
   color,
   material,
   image,
+  productId,
 }: TUpdateProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -76,6 +78,7 @@ const ShoesDetails = ({
                     {material}
                   </div>
                 </h2>
+                <h2 className="card-title">ProductId: {productId}</h2>
                 <div className="flex lg:flex-row flex-col">
                   <p>
                     <span className="p-text">quantity:</span>

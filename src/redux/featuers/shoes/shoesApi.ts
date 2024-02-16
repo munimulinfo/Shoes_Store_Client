@@ -55,6 +55,15 @@ const shoesApi = baseApi.injectEndpoints({
       providesTags: ["shoes"],
     }),
 
+    verifyShoes: builder.query({
+      query: (id) => {
+        return {
+          url: `/shoes/verify-shoe/${id}`,
+          method: "GET",
+        };
+      },
+    }),
+
     addShoes: builder.mutation({
       query: (shoe) => {
         console.log(shoe, "inside shoe api");
@@ -106,4 +115,5 @@ export const {
   useUpdateShoesMutation,
   useDeleteShoeMutation,
   useDeleteMulltipleShoeMutation,
+  useVerifyShoesQuery,
 } = shoesApi;

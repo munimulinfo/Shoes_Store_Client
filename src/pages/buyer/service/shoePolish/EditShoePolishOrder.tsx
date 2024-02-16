@@ -2,7 +2,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import { useState } from "react";
 import { toast } from "sonner";
 import { FaRegEdit } from "react-icons/fa";
-import { useUpdateShoePolishRequestMutation } from "../../../redux/featuers/shoesService/shoeService.Api";
+import { useUpdateShoePolishRequestMutation } from "../../../../redux/featuers/shoesService/shoeService.Api";
 type TEditShoePloish = {
   _id: string;
   phoneNumber: string;

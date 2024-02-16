@@ -1,7 +1,7 @@
 import { FieldValues, useForm } from "react-hook-form";
 import { useState } from "react";
-import { useAppSelector } from "../../../redux/hooks";
-import { useAddShoePolishRequestMutation } from "../../../redux/featuers/shoesService/shoeService.Api";
+import { useAppSelector } from "../../../../redux/hooks";
+import { useAddShoePolishRequestMutation } from "../../../../redux/featuers/shoesService/shoeService.Api";
 import { toast } from "sonner";
 
 const AddPolishRequest = () => {

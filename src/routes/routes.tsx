@@ -7,9 +7,12 @@ import ProtectRoute from "./ProtectRoute";
 import Allsels from "../pages/buyer/allsels/Allsels";
 import SellsHistory from "../pages/buyer/allsels/SellsHistory";
 import ErrorPage from "../pages/ErrorPage";
-import VerifyShoes from "../pages/buyer/service/VerifyShoes";
-import CutomizedShoe from "../pages/buyer/service/CutomizedShoe";
-import ShoePolisService from "../pages/buyer/service/ShoePolisService";
+import VerifyShoes from "../pages/buyer/service/shoePolish/VerifyShoes";
+import CutomizedShoe from "../pages/buyer/service/shoePolish/CutomizedShoe";
+import ShoePolisService from "../pages/buyer/service/shoePolish/ShoePolisService";
+import AllShoePolishRequest from "../pages/seller/shoePolish/AllShoePolishRequest";
+import ShoeCustomizedService from "../pages/buyer/service/shoeCustomized/ShoeCustomizedService";
+import AllShoeCustomizedRequest from "../pages/seller/shoeCustomized/AllShoeCustomizedRequest";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +58,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "all-shoePolish",
+        element: (
+          <ProtectRoute>
+            <AllShoePolishRequest></AllShoePolishRequest>
+          </ProtectRoute>
+        ),
+      },
+      {
         path: "customized-shoe",
         element: (
           <ProtectRoute>
@@ -67,6 +78,22 @@ const router = createBrowserRouter([
         element: (
           <ProtectRoute>
             <ShoePolisService></ShoePolisService>
+          </ProtectRoute>
+        ),
+      },
+      {
+        path: "shoeCustomized-service",
+        element: (
+          <ProtectRoute>
+            <ShoeCustomizedService></ShoeCustomizedService>
+          </ProtectRoute>
+        ),
+      },
+      {
+        path: "alShoeCustomized-request",
+        element: (
+          <ProtectRoute>
+            <AllShoeCustomizedRequest></AllShoeCustomizedRequest>
           </ProtectRoute>
         ),
       },
