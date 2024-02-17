@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useGetAllShoesQuery } from "../../../redux/featuers/shoes/shoesApi";
-import ShoesDetails from "../../seller/shoes/ShoesDetails";
+import ShoesDetails from "../shoes/ShoesDetails";
 import SelsForm from "./SelsForm";
 
 const Allsels = () => {

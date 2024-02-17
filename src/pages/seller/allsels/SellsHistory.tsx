@@ -6,7 +6,7 @@ import {
   useDeletSellMutation,
   useGetAllSellQuery,
 } from "../../../redux/featuers/sells/sellsApi";
-import ShoesDetails from "../../seller/shoes/ShoesDetails";
+import ShoesDetails from "../shoes/ShoesDetails";
 
 const SellsHistory = () => {
   const [params, setParams] = useState({ filter: "" });

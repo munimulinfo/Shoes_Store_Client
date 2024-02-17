@@ -59,9 +59,6 @@ const SearchModal = ({ setFilter }: TPropsSearch) => {
               className=""
               action=""
             >
-              {/* <h1 className="text-lg text-center mb-2 font-serif text-emerald-500 uppercase font-bold ">
-                Filter Shoes
-              </h1> */}
               {/* //first row  */}
               <div className="flex flex-col lg:flex-row gap-6 w-full">
                 <div className="form-control w-full">
@@ -72,7 +69,7 @@ const SearchModal = ({ setFilter }: TPropsSearch) => {
                     type="text"
                     {...register("name")}
                     placeholder="Enter Shoe Name"
-                    className="input input-bordered"
+                    className="input input-bordered input-error"
                   />
                 </div>
 
@@ -84,7 +81,7 @@ const SearchModal = ({ setFilter }: TPropsSearch) => {
                     type="number"
                     {...register("quantity")}
                     placeholder="Enter shoe quantity"
-                    className="input input-bordered"
+                    className="input input-bordered input-error"
                   />
                 </div>
               </div>
@@ -101,7 +98,7 @@ const SearchModal = ({ setFilter }: TPropsSearch) => {
                     {...register("price")}
                     max={10000}
                     onChange={handleChange}
-                    className="range range-success range-md"
+                    className="range  range-error range-md"
                   />
                   <p>{price}</p>
                 </div>
@@ -112,7 +109,7 @@ const SearchModal = ({ setFilter }: TPropsSearch) => {
                   <input
                     type="date"
                     {...register("releaseDate")}
-                    className="input input-bordered"
+                    className="input input-bordered input-error"
                   />
                 </div>
               </div>
@@ -126,7 +123,7 @@ const SearchModal = ({ setFilter }: TPropsSearch) => {
                     type="text"
                     {...register("brand")}
                     placeholder="Enter brand"
-                    className="input input-bordered"
+                    className="input input-bordered input-error"
                   />
                 </div>
                 <div className="form-control w-full">
@@ -137,7 +134,7 @@ const SearchModal = ({ setFilter }: TPropsSearch) => {
                     type="text"
                     {...register("model")}
                     placeholder="Enter model"
-                    className="input input-bordered"
+                    className="input input-bordered input-error"
                   />
                 </div>
               </div>
@@ -151,7 +148,7 @@ const SearchModal = ({ setFilter }: TPropsSearch) => {
                     type="text"
                     {...register("color")}
                     placeholder="Enter color"
-                    className="input input-bordered"
+                    className="input input-bordered input-error"
                   />
                 </div>
                 <div className="form-control w-full">
@@ -160,7 +157,7 @@ const SearchModal = ({ setFilter }: TPropsSearch) => {
                   </label>
                   <select
                     {...register("meterial")}
-                    className="select select-bordered w-full "
+                    className="select select-bordered select-error w-full "
                   >
                     <option disabled value="">
                       select meterial
@@ -180,7 +177,7 @@ const SearchModal = ({ setFilter }: TPropsSearch) => {
                     type="number"
                     {...register("size")}
                     placeholder="Enter shoe size"
-                    className="input input-bordered"
+                    className="input input-bordered input-error"
                   />
                 </div>
                 <div className="form-control w-full">
@@ -191,7 +188,7 @@ const SearchModal = ({ setFilter }: TPropsSearch) => {
                     type="text"
                     {...register("style")}
                     placeholder="Enter Shoe Style"
-                    className="input input-bordered w-full"
+                    className="input input-bordered input-error w-full"
                   />
                 </div>
               </div>
@@ -200,7 +197,7 @@ const SearchModal = ({ setFilter }: TPropsSearch) => {
               <div className="form-control w-full mt-4">
                 <button
                   type="submit"
-                  className="btn bg-emerald-500 text-white  font-serif hover:bg-emerald-500 border-0"
+                  className="btn text-white  font-serif button-gradient"
                 >
                   Filter
                 </button>

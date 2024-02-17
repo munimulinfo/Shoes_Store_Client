@@ -27,6 +27,7 @@ const Register = () => {
         name: data.name,
         email: data.email,
         password: data.password,
+        role: data.role,
       };
       const result = await userRegister(user).unwrap();
       reset();
@@ -83,6 +84,28 @@ const Register = () => {
             {errors.email && (
               <span className="text-rose-500 animate-pulse">
                 please provide valid Email
+              </span>
+            )}
+          </div>
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-color">User Role</span>
+            </label>
+            <select
+              {...register("role", {
+                required: true,
+              })}
+              className="select select-bordered w-full "
+            >
+              <option disabled value="">
+                select role
+              </option>
+              <option value="seller">Seller</option>
+              <option value="buyer">Buyer</option>
+            </select>
+            {errors.role && (
+              <span className="text-rose-500 animate-pulse">
+                Please provide Role
               </span>
             )}
           </div>

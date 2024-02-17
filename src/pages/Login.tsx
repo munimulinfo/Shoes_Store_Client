@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUserLoginMutation } from "../redux/featuers/auth/authApi";
 import { decodedToken } from "../utils/decodedToken";
 import { useAppDispatch } from "../redux/hooks";
-import { loginUser } from "../redux/featuers/auth/authSlice";
+import { Tuser, loginUser } from "../redux/featuers/auth/authSlice";
 
 const Login = () => {
   const [loding, setLoding] = useState(false);
@@ -43,7 +43,7 @@ const Login = () => {
       );
       reset();
       toast.success(result?.message);
-      navigate("/", { replace: true });
+      navigate(`/${(user as Tuser)?.role}/dashboard`, { replace: true });
     } catch (error: any) {
       console.log(error);
       toast.error(`${error?.data?.message}`);
